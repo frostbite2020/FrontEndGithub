@@ -5,12 +5,14 @@ import {getCategoryById, createSubTodo} from "../Redux/actions/subTodoAction";
 import {Link} from 'react-router-dom'
 import '../css/style.css'
 import TodoListDataPage from "./todoListData/todoListData";
+import '../css/style.css'
 
 const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   match, history, subTodoCategory}) => {
   const [idCategory, setIdCategory] = useState('')
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState('')
   const [filteredPriority, setFilteredPriority] = useState(0)
+  const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState(0)
   //pagination
   const [pageIndex, setPageIndex] = useState(1)
@@ -25,17 +27,17 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
         setTitle(categoryTitle);
         setIdCategory(id);
       });
-      dispatchGetSubTodoIdAction(idSub, pageIndex, sortBy, filteredPriority, data => {
+      dispatchGetSubTodoIdAction(idSub, search, pageIndex, sortBy, filteredPriority,  data => {
         setPageIndex(data.todoItems.pageIndex)
         setTotalPages(data.todoItems.totalPages)
-      });
+      });      
     }
-  }, [dispatchGetTodoIdAction, dispatchGetSubTodoIdAction, match.params.todoCategoryID, pageIndex, sortBy, filteredPriority ])
+    
+  }, [dispatchGetTodoIdAction, dispatchGetSubTodoIdAction, match.params.todoCategoryID, search, pageIndex, sortBy, filteredPriority ])
   
   const cek =() =>{
-    console.log("ini angka"+ (2 + filteredPriority))
+    console.log("ini angka" + title)
   }
-
   //pagination
   const halaman = []
   for (let i = 1; i < (totalPages + 1); i++) {
@@ -86,7 +88,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
       setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
       setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit)
     }
-    if(pageIndex == totalPages && totalPages % 2 == 1){
+    if(pageIndex == totalPages){
       let i = totalPages
       setPageIndex(i - 1)
     }
@@ -121,9 +123,22 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
     <React.Fragment>
       <div className="container mt-5">
         <div className="row">
-          <div className="col-2">
+          <div className="col-3">
             <h2 style={{fontWeight:'bold'}}>{title}</h2>
-            {/* <button onClick={cek}>cek</button> */}
+            <button onClick={cek}>cek</button>
+            <div className="search-input input-group">
+              <input 
+                  className="form-control"
+                  type="text"
+                  placeholder="Search By Title"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}/>
+                <span className="input-group-btn">
+                  <button className="btn-primary">
+                    search
+                  </button>
+                </span>
+            </div>
             <select value={sortBy} defaultValue="0" onChange={(e) => setSortBy(e.target.value)}>
               <option value="0">-----</option>
               <option value="1">By Name</option>
@@ -141,7 +156,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
               <button className="btn btn-primary mt-1"> Add </button>
             </Link>
           </div>
-          <div className="col-10">
+          <div className="col-9">
               <table className="table border">
                 <thead>
                   <tr>
@@ -158,7 +173,8 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
                   idCategory={idCategory} 
                   subTodoCategory={subTodoCategory}
                   filteredPriority={filteredPriority}
-                  sortBy={sortBy}/>
+                  sortBy={sortBy}
+                  search={search}/>
               </table>
               <div className="row">
                 <div className="col">
@@ -187,7 +203,7 @@ const mapStateToProps = state => ({
   loading : state.loading,
   todoCategory : state.todoCategory,
   subTodoCategory : state.subTodoList,
-  
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -195,8 +211,8 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchGetTodoIdAction: (id, onSuccess) => 
     dispatch(getCategoryId(id, onSuccess)),
 
-  dispatchGetSubTodoIdAction: (id, sortBy, filterByPriority, onSuccess, onError) => 
-    dispatch(getCategoryById(id, sortBy, filterByPriority, onSuccess, onError)),
+  dispatchGetSubTodoIdAction: (id, search, pageIndex, sortBy, filterByPriority, onSuccess, onError) => 
+    dispatch(getCategoryById(id, search, pageIndex, sortBy, filterByPriority, onSuccess, onError)),
 
   dispatchCreateTodoSubAction: (data, onSuccess, onError) =>
     dispatch(createSubTodo(data, onSuccess, onError)),

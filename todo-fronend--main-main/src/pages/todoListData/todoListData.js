@@ -13,7 +13,8 @@ const TodoListDataPage = ({
         dispatchGetSubTodoIdAction,
         pageIndex,
         filteredPriority,
-        sortBy
+        sortBy,
+        search
     }) => {
 
     //checkbox
@@ -23,7 +24,7 @@ const TodoListDataPage = ({
         const dataCheck = {id, done}
         dispatchUpdateCheckBoxAction( id,  dataCheck, () =>{
           toast.success('Success updating status');
-          dispatchGetSubTodoIdAction(idCategory, pageIndex, sortBy, filteredPriority);
+          dispatchGetSubTodoIdAction(idCategory, search, pageIndex, sortBy, filteredPriority);
         }, (message) => toast.error(`Error : ${message}`));
     
       }
@@ -43,7 +44,7 @@ const TodoListDataPage = ({
           () => {
             window.$("#confirmationModal").modal("hide");
             toast.success("Udah kehapus Nih!");
-            dispatchGetSubTodoIdAction(id, pageIndex, sortBy, filteredPriority)
+            dispatchGetSubTodoIdAction(id, search, pageIndex, sortBy, filteredPriority)
           },
           (message) => {
             window.$("#confirmationModal").modal("hide");

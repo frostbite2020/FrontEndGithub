@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import {connect} from 'react-redux'
 
 import Header from "./components/header";
-import Footer from "./components/footer";
 import Spinner from "./components/spinner/spinner";
 
 import AuthPage from './pages/authPage';

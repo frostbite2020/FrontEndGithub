@@ -24,7 +24,7 @@ function FormCreateSubTodo(props){
     }
 
     return (
-        <>
+        <div className="container mt-5">
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="activityTitle">Title</Label>
@@ -65,7 +65,7 @@ function FormCreateSubTodo(props){
                     Cancel
                 </Button>
             </Form>
-        </>
+        </div>
     );
 };
 

@@ -35,6 +35,7 @@ export const apiMiddleware = ({dispatch, getState}) => next => action => {
             if (err.response.data.title){
                 if(postProcessError) postProcessError(err.response.data.title);
             }
+            
         }
     })
 };

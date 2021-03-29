@@ -1,10 +1,12 @@
 import * as constans from '../constant'
 
-export const getCategoryById = (categoryId, pageNumber, sorting, filterByPriority, onSuccess, onError) => ({
+export const getCategoryById = (categoryId, search, pageNumber, sorting, filterByPriority,  onSuccess, onError) => ({
     type: constans.API,
     payload: {
         method : 'GET',
-        url : `/item?CategoryId=${categoryId}&PageNumber=${pageNumber}&PageSize=5`
+        url : `/item?CategoryId=${categoryId}` 
+        + (search != "" ? `&searchByTitle=${search}` : ``)
+        + `&PageNumber=${pageNumber}&PageSize=5`
         + (sorting != 0 ? `&Sorting=${sorting}` : ``)
         + (filterByPriority != 0 ? `&FilterByPriority=${filterByPriority}` : ``),
         postProcessSuccess: onSuccess,

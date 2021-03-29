@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import '../css/style.css'
 
 const Header = ({isLoggedIn, onLogOut, userData}) => {
+  const [date, setDate] = useState({time: new Date()})
+
+  const currentTime = () => {
+    setDate({...date, time: new Date()})
+  }
+  setInterval(() => {
+    currentTime()
+  }, 1000)
+  
     return (
       <div>
         { isLoggedIn &&
-        <nav className="navbar navbar-dark bg-dark">
+        <nav className="navbar navbar-dark">
           <Link className="home-navigation navbar-brand" to="/"> 
-            Home
+            <p className="px-3">Home</p>
           </Link>
-            <h4>
-              <span className="badge badge-pill badge-secondary text-capitalize"> Hello {userData.fullName}</span>
-            </h4>
+          <div className="clock">
+            {date.time.toLocaleTimeString()}
+          </div>
             <button type="button" onClick={onLogOut} className="btn btn-outline-warning" >
               Logout 
             </button>

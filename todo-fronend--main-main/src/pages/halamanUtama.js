@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import ShowList from "../components/List";
-import { fetchAllTodo } from "../Redux/actions/todolistAction";
-import {connect} from 'react-redux';
-import {Link } from 'react-router-dom';
+import React, {useEffect} from "react"
+import ShowList from "../components/List"
+import { fetchAllTodo } from "../Redux/actions/todolistAction"
+import {connect} from 'react-redux'
+import {Link } from 'react-router-dom'
 
 const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
     
@@ -13,7 +13,7 @@ const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
 
     return(
         <React.Fragment>
-            <div className="container">
+            <div className="container mt-5">
                 <div className="row my-5">
                     <div className="col-10">
                         <h2> TodoList </h2>
@@ -34,7 +34,7 @@ const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
                     }
                     </div>           
                 </div>
-             </div>
+            </div>
         </React.Fragment>
     );
 }

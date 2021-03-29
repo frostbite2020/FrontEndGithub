@@ -73,3 +73,47 @@
 .register-main-container{
     padding-bottom: -125px;
 }
+
+/* Header */
+.navbar{
+    background-color: transparent;
+}
+
+.home-navigation{
+    height: 40px;
+}
+.home-navigation:hover{
+    border-radius: 10px;
+    background-color: #ACFCD9;
+}
+
+.home-navigation p{
+    font-size: 22px;
+    color: #B084CC;
+    font-family: 'Anton', sans-serif;
+}
+
+/* Home page */
+.clock{
+    color: #190933;
+    font-size: 30px;
+    font-family: 'Anton', sans-serif;
+}
+.clock p{
+    color: #190933;
+}
+
+/* sub todo */
+.search-input input{
+    padding-left: 5px;
+    color: grey;
+    opacity: 0.8;
+}
+
+.search-input span button{
+    padding-bottom: 7px;
+    padding-top: 4px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-color: transparent;
+}
