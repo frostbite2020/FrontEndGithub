@@ -4,24 +4,24 @@ import { CreateTodo } from "../Redux/actions/todolistAction";
 import {toast} from 'react-toastify'
 
 
-const ListPage = ({ dispatchCreateTodoAction, history }) => {
+const ListPage = ({ dispatchCreateTodoAction, match, history}) => {
   
   const [categoryTitle, setCategoryTitle] = useState("");
 
   const handleOnSubmit = event => {
       event.preventDefault();
-      const data = {categoryTitle};
+      const userPropertyId = parseInt(match.params.userId, 10)
+      const data = {categoryTitle, userPropertyId}
+      console.log(data)
       dispatchCreateTodoAction(data, () => {
-            toast.success('judul listmu sudah dibuat');
+            toast.success('judul listmu sudah dibuat')
             history.replace('/todo-category');     
-        }, (message) => toast.error(`Error: ${message}`));
+        }, (title) => toast.error(`Error: ${title}`))
   }
-
-  
 
   return (
     <React.Fragment>
-    <div className="container-sm">
+    <div className="container-sm mt-5">
          <div className="row">
         <div className="col">
           <h3>Add Todo</h3>

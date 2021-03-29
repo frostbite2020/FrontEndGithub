@@ -1,10 +1,10 @@
 import * as constants from '../constant'
 
-export const fetchAllTodo = () => ({
+export const fetchAllTodo = (userId) => ({
     type : constants.API,
     payload: {
         methode : 'GET',
-        url : '/category',
+        url : `/category/${userId}`,
         success : (response) => (setAllTodo(response))
     }
 })
@@ -25,7 +25,7 @@ export const getCategoryId = (id, onSuccess) => ({
     type : constants.API,
     payload: {
         method: 'GET',
-        url : `/category/${id}`,
+        url : `/category/category-by-id/${id}`,
         postProcessSuccess: onSuccess
     }
 })

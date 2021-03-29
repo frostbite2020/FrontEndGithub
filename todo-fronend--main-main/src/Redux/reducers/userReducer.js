@@ -1,6 +1,8 @@
 import * as constants from '../constant';
 
 const defaultState = {
+    userId: null,
+    fullName: null,
     token: null,
     isLoggedIn: false,
 

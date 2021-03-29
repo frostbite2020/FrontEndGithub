@@ -38,8 +38,11 @@ function EditSubTodo(props){
       }, (message) => toast.error(`Error : ${message}`));
     }
 
+    const cancelButton = () => {
+      history.replace(`/todo-category/${categoryId}/todos`)
+    }
     return (
-      <>
+      <div className="container mt-5">
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="activityTitle">Title</Label>
@@ -83,11 +86,13 @@ function EditSubTodo(props){
           <Button type="submit" color="primary" >
             Save
           </Button>
-          <Button color="secondary">
+          <Button 
+            color="secondary"
+            onClick={cancelButton}>
             Cancel
           </Button>
         </Form>
-      </>
+      </div>
     );
 }
 

@@ -1,11 +1,12 @@
 import * as constans from '../constant'
 
-export const getCategoryById = (categoryId, pageNumber, onSuccess, onError) => ({
+export const getCategoryById = (categoryId, pageNumber, sorting, filterByPriority, onSuccess, onError) => ({
     type: constans.API,
     payload: {
         method : 'GET',
-        url : `/item?CategoryId=${categoryId}&PageNumber=${pageNumber}&PageSize=5`,
-        // + (filterByPriority != null ? `&FilterByPriority=${filterByPriority}` : ""),
+        url : `/item?CategoryId=${categoryId}&PageNumber=${pageNumber}&PageSize=5`
+        + (sorting != 0 ? `&Sorting=${sorting}` : ``)
+        + (filterByPriority != 0 ? `&FilterByPriority=${filterByPriority}` : ``),
         postProcessSuccess: onSuccess,
         postProcessError: onError,
         success: (response) => (SetAllSubTodo(response))
@@ -70,7 +71,7 @@ export const getDeleteSubCategory = (id, onSuccess, onError) => ({
 
 const SetAllSubTodo = (data) => ({
     type: constans.FETCH_ALL_SUB_TODO,
-    payload: data
+    payload: data.todoItems.lists,
 })
 
 const AddSubTodo = (subTodo) => ({

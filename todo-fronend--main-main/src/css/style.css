@@ -29,3 +29,47 @@
 .pageNumbers li button:focus{
     outline: none;
 }
+
+
+/* auth pages */
+.auth-main-container{
+    background-image: url("../picture/view4.jpg");
+}
+
+.sub-container{
+    padding-bottom: 125px;
+}
+
+.left-view {
+    margin-top: 180px;
+}
+
+.left-view h1{
+    font-family: 'Anton', sans-serif;
+    font-size: 65px;
+    color: white;
+}
+
+.left-view p{
+    font-family: 'Roboto', sans-serif;
+    color: #EF84E6;
+    font-size: 30px;
+}
+
+.right-view{
+    margin-top: 40px;
+}
+
+.right-view h1{
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-active{
+    margin-top: 100px;
+}
+
+/* register component */
+
+.register-main-container{
+    padding-bottom: -125px;
+}

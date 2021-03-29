@@ -31,7 +31,7 @@ const EditTodo = ({ dispatchGetTodoIdAction, match, dispatchUpdateTodoAction,his
 
   return (
     <React.Fragment>
-    <div className="container-sm">
+    <div className="container mt-5">
          <div className="row">
         <div className="col">
           <h3>Add Todo</h3>

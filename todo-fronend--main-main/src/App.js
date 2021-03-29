@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import {connect} from 'react-redux'
 
 import Header from "./components/header";
+import Footer from "./components/footer";
 import Spinner from "./components/spinner/spinner";
 
 import AuthPage from './pages/authPage';
@@ -25,7 +26,7 @@ const App = ({user, dispatchLogoutAction}) => {
       <Spinner/>
       <Header isLoggedIn={user.isLoggedIn} 
               onLogOut={dispatchLogoutAction}/>
-      <div className="container my-5">
+      <div>
         {!user.isLoggedIn ? (
           <Switch>
             <Route exact path="/auth" component={AuthPage} />
@@ -35,10 +36,10 @@ const App = ({user, dispatchLogoutAction}) => {
           <Switch>
             <Route exact path="/todo-category" component={Home} />
             <Route exact path="/todo-category/:id/edit/" component={EditTodo} />
-            <Route exact path="/todo-category/add" component={AddTodo} />
+            <Route exact path="/todo-category/:userId/add" component={AddTodo} />
             <Route exact path="/todo-category/:todoCategoryID/todos" component={SubList}/>
             <Route exact path="/todo-category/:id/todo/:EditSubTodo" component={FormEdit}/>
-            <Route exact path="/todo-category/:id/add" component={FormCreateSubTodo}/>
+            <Route exact path="/todo-category/subTodo/:id/add" component={FormCreateSubTodo}/>
             <Redirect to="/todo-category" />
           </Switch>
         )}    

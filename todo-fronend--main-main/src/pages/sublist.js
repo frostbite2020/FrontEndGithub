@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {getCategoryId} from "../Redux/actions/todolistAction";
-import {getCategoryById, createSubTodo, getDeleteSubCategory, updateCheckDone} from "../Redux/actions/subTodoAction";
-import { toast } from "react-toastify";
+import {getCategoryById, createSubTodo} from "../Redux/actions/subTodoAction";
 import {Link} from 'react-router-dom'
 import '../css/style.css'
+import TodoListDataPage from "./todoListData/todoListData";
 
-
-const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
- dispatchDeleteTodoSubAction, dispatchUpdateCheckBoxAction, match, history, subTodoCategory}) => {
+const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
+  match, history, subTodoCategory}) => {
   const [idCategory, setIdCategory] = useState('')
   const [title, setTitle] = useState("")
-  const [data, setData] = useState([])
-  const [selectSubTodo, setSelectSubTodo] = useState("")
-  const [filteredPriority, setFilteredPriority] = useState(3)
-  const [priority, setPriority] = useState([])
+  const [filteredPriority, setFilteredPriority] = useState(0)
+  const [sortBy, setSortBy] = useState(0)
   //pagination
   const [pageIndex, setPageIndex] = useState(1)
   const [totalPages, setTotalPages] = useState()
@@ -28,56 +25,17 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
         setTitle(categoryTitle);
         setIdCategory(id);
       });
-      dispatchGetSubTodoIdAction(idSub, pageIndex, data => {
-        setData(data.todoItems.lists)
-        setPriority(data.priorityLevels)
+      dispatchGetSubTodoIdAction(idSub, pageIndex, sortBy, filteredPriority, data => {
         setPageIndex(data.todoItems.pageIndex)
         setTotalPages(data.todoItems.totalPages)
       });
     }
-  }, [dispatchGetTodoIdAction, dispatchGetSubTodoIdAction, match.params.todoCategoryID, pageIndex])
-
-  const showModal = (event, id) => {
-    event.preventDefault();
-    setSelectSubTodo(id);
-    window.$("#confirmationModal").modal("show");
-  }
-  const checkDone = (event, id, e) => {
-    event.preventDefault()
-    const idSub = match.params.todoCategoryID;
-    const done = !e
-    const dataCheck = {id, done}
-    dispatchUpdateCheckBoxAction( id,  dataCheck, () =>{
-      toast.success('Success updating status');
-      dispatchGetSubTodoIdAction(idSub, pageIndex, data => {
-        setData(data.todoItems.lists)
-        setPageIndex(data.todoItems.pageIndex)
-        setPriority(data.priorityLevels)
-      });
-    }, (message) => toast.error(`Error : ${message}`));
-
+  }, [dispatchGetTodoIdAction, dispatchGetSubTodoIdAction, match.params.todoCategoryID, pageIndex, sortBy, filteredPriority ])
+  
+  const cek =() =>{
+    console.log("ini angka"+ (2 + filteredPriority))
   }
 
-  const handleDelete = () => {
-    const id = match.params.todoCategoryID;
-    dispatchDeleteTodoSubAction(
-      selectSubTodo,
-      () => {
-        window.$("#confirmationModal").modal("hide");
-        toast.success("Udah kehapus Nih!");
-        dispatchGetSubTodoIdAction(id, pageIndex, data => {
-          setData(data.todoItems.lists)
-        })
-      },
-      (message) => {
-        window.$("#confirmationModal").modal("hide");
-        toast.error(`Error:${message}`);
-      }
-    );
-  };
-  const cek =()=>{
-    console.log(subTodoCategory.todoItems.lists)
-  }
   //pagination
   const halaman = []
   for (let i = 1; i < (totalPages + 1); i++) {
@@ -120,10 +78,6 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   }
   const prevDecrementPage = () => {
     setPageIndex(pageIndex - 5)
-    if(pageIndex == totalPages){
-      let i = totalPages
-      setPageIndex(i - 1)
-    }
     if((pageIndex - 5)% pageNumberLimit == 1 
         || (pageIndex - 5)% pageNumberLimit == 2
         || (pageIndex - 5)% pageNumberLimit == 3
@@ -131,6 +85,10 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
         || (pageIndex - 5)% pageNumberLimit == 0){
       setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
       setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit)
+    }
+    if(pageIndex == totalPages && totalPages % 2 == 1){
+      let i = totalPages
+      setPageIndex(i - 1)
     }
   }
   let pageIncrementBtn = null;
@@ -161,12 +119,25 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   //main
   return (
     <React.Fragment>
-      <div className="container-sm">
+      <div className="container mt-5">
         <div className="row">
           <div className="col-2">
             <h2 style={{fontWeight:'bold'}}>{title}</h2>
             {/* <button onClick={cek}>cek</button> */}
-            <Link to={`/todo-category/${idCategory}/add`}> 
+            <select value={sortBy} defaultValue="0" onChange={(e) => setSortBy(e.target.value)}>
+              <option value="0">-----</option>
+              <option value="1">By Name</option>
+              <option value="2">By Descent Name</option>
+              <option value="3">By Priority</option>
+            </select>
+            <select value={filteredPriority} defaultValue="0" onChange={(e) => setFilteredPriority(e.target.value)}>
+              <option value="0">-----</option>
+              <option value="4">High Priority</option>
+              <option value="3">Medium Priority</option>
+              <option value="2">Low Priority</option>
+              <option value="1">None</option>
+            </select>
+            <Link to={`/todo-category/subTodo/${idCategory}/add`}> 
               <button className="btn btn-primary mt-1"> Add </button>
             </Link>
           </div>
@@ -182,40 +153,12 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
                     <th>Action Button</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {data.map((datas, index) => (
-                    <tr>
-                      <th scope="row" id="nomorUrut">{index + 1}</th>
-                      <td>
-                        <div className="form-check">
-                          <input 
-                            className="form-check-input" 
-                            type="checkbox"
-                            checked={datas.done}
-                            id="flexCheckDefault"
-                            aria-setsize={30}
-                            size={30}
-                            onChange={(e) => checkDone(e, datas.id, datas.done)}/>
-                        </div>
-                      </td>
-                      <td>{datas.activityTitle}</td>
-                      <td>{datas.priority}</td>
-                      <td>{datas.note}</td>
-                      <td>
-                        {datas.done ? <button
-                          className="btn btn-secondary"
-                          href="/"
-                          onClick={(e) => showModal(e, datas.id)}
-                        >
-                          delete
-                        </button> : <button className="btn btn-secondary" disabled>delete</button>}
-                        <Link to={`/todo-category/${datas.categoryId}/todo/${datas.id}`}  className="ml-2" > 
-                          <button className="btn btn-warning">edit</button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                <TodoListDataPage 
+                  pageIndex={pageIndex} 
+                  idCategory={idCategory} 
+                  subTodoCategory={subTodoCategory}
+                  filteredPriority={filteredPriority}
+                  sortBy={sortBy}/>
               </table>
               <div className="row">
                 <div className="col">
@@ -235,7 +178,6 @@ const Sublist = ({dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
             </div>
           </div>
           
-        <Modal handleDelete={handleDelete} />
       </div>
     </React.Fragment>
   );
@@ -245,6 +187,7 @@ const mapStateToProps = state => ({
   loading : state.loading,
   todoCategory : state.todoCategory,
   subTodoCategory : state.subTodoList,
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -252,50 +195,11 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchGetTodoIdAction: (id, onSuccess) => 
     dispatch(getCategoryId(id, onSuccess)),
 
-  dispatchGetSubTodoIdAction: (id, onSuccess, onError) => 
-    dispatch(getCategoryById(id, onSuccess, onError)),
+  dispatchGetSubTodoIdAction: (id, sortBy, filterByPriority, onSuccess, onError) => 
+    dispatch(getCategoryById(id, sortBy, filterByPriority, onSuccess, onError)),
 
   dispatchCreateTodoSubAction: (data, onSuccess, onError) =>
     dispatch(createSubTodo(data, onSuccess, onError)),
-    
-  dispatchUpdateCheckBoxAction: (id, data, onSuccess, onError) =>
-    dispatch(updateCheckDone(id, data, onSuccess, onError)),
-  
-  dispatchDeleteTodoSubAction: (id, onSuccess, onError) =>
-    dispatch(getDeleteSubCategory (id, onSuccess, onError)),
-  
-  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sublist);
-
-const Modal = ({ handleDelete }) => (
-  <div className="modal" id="confirmationModal">
-    <div role="document" className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title"> confirmation </h5>
-        </div>
-        <div className="modal-body">
-          <p>yakin mau hapus ?</p>
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            data-dismiss="modal"
-            className="btn btn-secondary"
-          >
-            Enggak
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={handleDelete}
-            data-dismiss="modal"
-          >
-            Iya dong
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-);

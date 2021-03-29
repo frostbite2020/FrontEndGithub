@@ -4,31 +4,36 @@ import { fetchAllTodo } from "../Redux/actions/todolistAction";
 import {connect} from 'react-redux';
 import {Link } from 'react-router-dom';
 
-const FormPage = ({ todoCategory, dispatchFetchAllTodoAction}) => {
+const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
     
-    useEffect(() => dispatchFetchAllTodoAction(), [dispatchFetchAllTodoAction]);    
+    useEffect(() => {
+        const id = userData.userId
+        dispatchFetchAllTodoAction(id)
+    }, [dispatchFetchAllTodoAction]);    
+
     return(
         <React.Fragment>
-            <div className="row my-5">
-                <div className="col-10">
-                    <h2> TodoList </h2>
-                </div >
-                <div className="col-2">
-                    <Link to="/todo-category/add" className="btn btn-primary">
-                        Create +
-                    </Link>
+            <div className="container">
+                <div className="row my-5">
+                    <div className="col-10">
+                        <h2> TodoList </h2>
+                    </div >
+                    <div className="col-2">
+                        <Link to={`/todo-category/${userData.userId}/add`} className="btn btn-primary" userData={userData}>
+                            Create +
+                        </Link>
+                    </div>
                 </div>
-            </div>
-            <div className="row mt-5">
-                <div className="col-12">
-                {
-                        todoCategory.length > 0 ? <ShowList todoCategory={todoCategory}/> :
-                        <div className="text-center mt-5">
-                            <h2 className="text-center"> kamu gak punya to Do Thing apa apa </h2>
-                        </div>
-                }
-
-                </div>           
+                <div className="row mt-5">
+                    <div className="col-12">
+                    {
+                            todoCategory.length > 0 ? <ShowList todoCategory={todoCategory}/> :
+                            <div className="text-center mt-5">
+                                <h2 className="text-center"> kamu gak punya to Do Thing apa apa </h2>
+                            </div>
+                    }
+                    </div>           
+                </div>
              </div>
         </React.Fragment>
     );
@@ -36,11 +41,12 @@ const FormPage = ({ todoCategory, dispatchFetchAllTodoAction}) => {
 
 const mapStateToProps = state => ({
     loading : state.loading,
-    todoCategory : state.todoCategory
+    todoCategory : state.todoCategory,
+    userData : state.user
 });
 
 const mapDispatchToProps = dispatch => ({
-    dispatchFetchAllTodoAction : () => dispatch(fetchAllTodo())
+    dispatchFetchAllTodoAction : (userId) => dispatch(fetchAllTodo(userId))
 });
 
 
