@@ -1,0 +1,344 @@
+.pageNumbers {
+    list-style: none;
+    display: flex;
+}
+
+.pageNumbers li{
+    padding: 8px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+.pageNumbers li.active{
+    background-color: black;
+    color: white;
+}
+
+.pageNumbers li button{
+    background-color: transparent;
+    color: black;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.pageNumbers li button:hover{
+    background-color: black;
+    color: white;
+}
+
+.pageNumbers li button:focus{
+    outline: none;
+}
+
+
+/* auth pages */
+.auth-main-container{
+    background-image: url("../picture/view4.jpg");
+}
+
+.sub-container{
+    padding-bottom: 125px;
+}
+
+.left-view {
+    margin-top: 180px;
+}
+
+.left-view h1{
+    font-family: 'Anton', sans-serif;
+    font-size: 65px;
+    color: white;
+}
+
+.left-view p{
+    font-family: 'Roboto', sans-serif;
+    color: #EF84E6;
+    font-size: 30px;
+}
+
+.right-view{
+    margin-top: 40px;
+}
+
+.right-view h1{
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-active{
+    margin-top: 100px;
+}
+
+/* register component */
+
+.register-main-container{
+    padding-bottom: -125px;
+}
+
+/* Header */
+.navbar{
+    background-color: transparent;
+}
+
+.home-navigation{
+    height: 40px;
+}
+.home-navigation:hover{
+    border-radius: 10px;
+    background-color: #ACFCD9;
+}
+
+.home-navigation p{
+    font-size: 22px;
+    color: #B084CC;
+    font-family: 'Anton', sans-serif;
+}
+
+/* Home page */
+.clock{
+    color: #190933;
+    font-size: 30px;
+    font-family: 'Anton', sans-serif;
+}
+.clock p{
+    color: #190933;
+}
+
+/* Daily Page */
+/* Bagian 1 Daily Page */
+.bagian-1{
+    font-family: 'Roboto', sans-serif;    
+    margin-top: 60px;
+    margin-bottom: 30px;
+    display: grid;
+    place-items: center;
+}
+
+.bagian-1 h1{
+    font-family: 'Oswald', sans-serif;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.bagian-check{
+    display: flex;
+    flex-direction: row;
+}
+
+.check-data{
+    margin: 0 1rem;
+}
+
+.check-data img{
+    transition: all 0.5s ease 0s;
+    margin-left: 5px;
+    margin-top: -10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.check-data img:hover{
+    background-color: rgb(155, 30, 30);
+}
+
+.add-new-daily{
+    font-size: 10px;
+}
+
+.check-form p{
+    font-size: 20px;
+}
+
+/* Bagian 2 Daily Page */
+.bagian-2{
+    position: fixed;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* button */
+.btn-show-more{
+    font-weight: 700;
+    border-radius: 20px;
+    line-height: 30px;
+    background-color: white;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    max-width: 200px;
+    width: 100%;
+    border: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-show-more:hover{
+    border-radius: 20px;
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Bagian 3 Daily Page */
+.bagian-3{
+    border: #190933 solid 2px;
+    border-radius: 30px;
+    position: fixed;
+    margin-left: 60%;
+    margin-right: 10px;
+    padding: 15px;
+    max-width: 280px;
+    box-sizing: border-box;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    background-color: #0F084B;
+    text-align: center;
+}
+.bagian-3 p{
+    font-family: 'Josefin Sans', sans-serif;
+    color: white;
+    font-size: 30px;
+}
+
+.btn-migrate {
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 45px;
+    max-width: 160px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+  .btn-migrate:hover {
+    text-decoration: none;
+    outline: solid  2px black;
+  }
+  
+  /*btn_background*/
+  .effect04 {
+    --uismLinkDisplay: var(--smLinkDisplay, inline-flex);
+    display: var(--uismLinkDisplay);
+    color: white;
+    outline: solid  2px white;
+    position: relative;
+    transition-duration: 0.4s;
+    overflow: hidden;
+  }
+  
+  .effect04::before,
+  .effect04 span{
+      margin: 0 auto;
+      transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+      transition-duration: 0.4s;
+  }
+  
+  .effect04:hover{
+    background-color: #000;
+  }
+  
+  .effect04:hover span{
+    -webkit-transform: translateY(-400%) scale(-0.1,20);
+            transform: translateY(-400%) scale(-0.1,20);
+  }
+  
+  .effect04::before{
+    content: attr(data-sm-link-text);
+    color: #FFF;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    -webkit-transform: translateY(500%) scale(-0.1,20);
+            transform: translateY(500%) scale(-0.1,20);
+  }
+  
+  .effect04:hover::before{
+    letter-spacing: 0.05em;
+    -webkit-transform: translateY(0) scale(1,1);
+            transform: translateY(0) scale(1,1);
+  }
+  
+
+
+/* category page */
+.title-category-page h2{
+    font-family: 'Anton', sans-serif;
+}
+
+/* sub todo */
+.search-input input{
+    padding-left: 5px;
+    color: grey;
+    opacity: 0.8;
+}
+
+.search-input span button{
+    padding-left: -5px;
+    padding-bottom: 5.5px;
+    padding-top: 4px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-color: transparent;
+}
+
+.sub-select-input{
+    margin-top: 5px;
+}
+
+.sub-select-input select{
+    margin-bottom: 5px;
+}
+
+/* History */
+
+.content{
+    margin-top: 1rem;
+}
+
+.content h1{
+    font-family: 'Roboto', sans-serif;
+}
+
+.checkbox-history{
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid #333;
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.checkbox-history::before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 2px;
+    left: 7px;
+    width: 8px;
+    height: 14px;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+
+.checkbox-history:checked{
+    color: #fff;
+    border-color: green;
+    background: green;
+}
+
+.checkbox-history:checked::before{
+    opacity: 1;
+}

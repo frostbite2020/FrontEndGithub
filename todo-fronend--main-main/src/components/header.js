@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import '../css/style.css'
 
-const Header = ({isLoggedIn, onLogOut, userData}) => {
+const Header = ({isLoggedIn, onLogOut}) => {
   const [date, setDate] = useState({time: new Date()})
 
   const currentTime = () => {

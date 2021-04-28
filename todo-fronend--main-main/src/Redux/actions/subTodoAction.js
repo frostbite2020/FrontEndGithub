@@ -5,10 +5,10 @@ export const getCategoryById = (categoryId, search, pageNumber, sorting, filterB
     payload: {
         method : 'GET',
         url : `/item?CategoryId=${categoryId}` 
-        + (search != "" ? `&searchByTitle=${search}` : ``)
+        + (search !== "" ? `&searchByTitle=${search}` : ``)
         + `&PageNumber=${pageNumber}&PageSize=5`
-        + (sorting != 0 ? `&Sorting=${sorting}` : ``)
-        + (filterByPriority != 0 ? `&FilterByPriority=${filterByPriority}` : ``),
+        + (sorting !== 0 ? `&Sorting=${sorting}` : ``)
+        + (filterByPriority !== 0 ? `&FilterByPriority=${filterByPriority}` : ``),
         postProcessSuccess: onSuccess,
         postProcessError: onError,
         success: (response) => (SetAllSubTodo(response))
@@ -22,8 +22,8 @@ export const createSubTodo = (data, onSuccess, onError) => ({
         url : '/item',
         data, 
         success: (subTodo) => (AddSubTodo(subTodo)),
-        postProcessError: onError, 
         postProcessSuccess: onSuccess,
+        postProcessError: onError, 
     }
 })
 

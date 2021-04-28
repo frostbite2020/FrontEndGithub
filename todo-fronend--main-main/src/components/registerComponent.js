@@ -11,27 +11,25 @@ const RegisterForm = ({ dispatchRegisterAction }) => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
     const [error, setError] = useState({firstName: false, lastName: false, username: false, email: false, password: false, phoneNumber: false})
 
     const handleSubmit = (event) => {
       event.preventDefault();
       if(isFormInvalid()) updatError();
-      else dispatchRegisterAction(firstName, lastName, username, email, password, phoneNumber,
+      else dispatchRegisterAction(firstName, lastName, username, email, password,
         () => toast.success('berhasil membuat akun'), 
         (message) => toast.error(`Error : ${message}`));
     };
 
-    const isFormInvalid = () => (!firstName || !lastName || !username || !email ||!password || !phoneNumber);
+    const isFormInvalid = () => (!firstName || !lastName || !username || !email ||!password);
 
     const updatError = () => {
-      const errObj = {firstName: false, lastName: false, username : false, email: false, password:false, phoneNumber: false};
+      const errObj = {firstName: false, lastName: false, username : false, email: false, password:false};
       if(!firstName) errObj.firstName = true;
       if(!lastName) errObj.lastName = true;
       if(!username) errObj.username = true;
       if(!email) errObj.email = true;
       if(!password) errObj.password = true;
-      if(!phoneNumber) errObj.phoneNumber = true;
       setError(errObj);
     };
 
@@ -124,8 +122,8 @@ const RegisterForm = ({ dispatchRegisterAction }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchRegisterAction : (username, firstName, lastName, email, password, phoneNumber, onSuccess, onError) => {
-    dispatch(registerUser({username, firstName, lastName, email, password, phoneNumber}, onSuccess, onError))
+  dispatchRegisterAction : (username, firstName, lastName, email, password, onSuccess, onError) => {
+    dispatch(registerUser({username, firstName, lastName, email, password}, onSuccess, onError))
   }
 });
 

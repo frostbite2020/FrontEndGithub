@@ -1,0 +1,224 @@
+$black: #000000;
+$cornflower-lilac: #ffaea9;
+$salmon: #ff7b73;
+$white: #ffffff;
+$your-pink: #ffcccc;
+
+.c-checkbox {
+    display: none;
+
+    &:checked + .c-formContainer {
+        .c-form {
+            width: 37.5em;
+        }
+
+        .c-form__toggle {
+            visibility: hidden;
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        .c-form__input,
+        .c-form__buttonLabel {
+            transition: 0.2s 0.1s;
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    &:not(:checked),
+    &:checked {
+        + .c-formContainer .c-form__input:required:valid ~ .c-form__toggle::before {
+            content: 'Added!';
+        }
+    }
+
+    &:not(:checked) + .c-formContainer {
+        .c-form__input:required:valid ~ .c-form__toggle {
+            pointer-events: none;
+            cursor: default;
+        }
+    }
+}
+
+.c-formContainer,
+.c-form,
+.c-form__toggle {
+    width: 20em;
+    height: 6.25em;
+}
+
+.c-formContainer {
+    position: relative;
+    font-weight: 700;
+}
+
+.c-form,
+.c-form__toggle {
+    position: absolute;
+    border-radius: 6.25em;
+    background-color: $white;
+    transition: 0.2s;
+}
+
+.c-form {
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.625em;
+    box-sizing: border-box;
+    box-shadow: 0 0.125em 0.3125em rgba($black, 0.3);
+
+    // position form inputs
+    display: flex;
+    justify-content: center;
+}
+
+.c-form__toggle {
+    color: $salmon;
+    top: 0;
+    cursor: pointer;
+    z-index: 1;
+
+    // position message
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover{
+        background-color: #06842c;
+        color: white;
+        transition-duration: 0.6s;
+    }
+    &::before {
+        font-size: 1.75em;
+        content: attr(data-title);
+    }
+}
+
+.c-form__input,
+.c-form__button {
+    font: inherit;
+    border: 0;
+    outline: 0;
+    border-radius: 5em;
+    box-sizing: border-box;
+}
+
+.c-form__input,
+.c-form__buttonLabel {
+    font-size: 1.75em;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.7);
+    transition: 0s;
+}
+
+.c-form__input {
+    color: $your-pink;
+    height: 100%;
+    width: 100%;
+    padding: 0 0.714em;
+
+    &::placeholder {
+        color: currentColor;
+    }
+
+    &:required:valid {
+        color: $salmon;
+
+        + .c-form__buttonLabel {
+            color: $white;
+
+            &::before {
+                pointer-events: initial;
+            }
+        }
+    }
+}
+
+.c-form__buttonLabel {
+    color: $cornflower-lilac;
+    height: 100%;
+    width: auto;
+    
+    // accepts click events
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        cursor: pointer;
+    }
+}
+
+.c-form__button {
+    color: inherit;
+    padding: 0;
+    height: 100%;
+    width: 5em;
+    background-color: $salmon;
+}
+
+// list daily
+$lightgray: #9c9e9f;
+$gray: #bdc1c6;
+$green: #06842c;
+
+.bagian-check input[type="checkbox"] {
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  color: $black;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+  &::before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 2px;
+    left: 7px;
+    width: 8px;
+    height: 14px;
+    border-style: solid;
+    border-color: $white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  &:checked {
+    color: $white;
+    border-color: $green;
+    background: $green;
+    &::before {
+      opacity: 1;
+    }
+    ~ label::before {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+}
+
+.bagian-check label {
+  position: relative;
+  cursor: pointer;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 0 0.25em 0;
+  user-select: none;
+  &::before {
+    position: absolute;
+    content: attr(data-content);
+    color: $lightgray;
+    clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    text-decoration-color: $black;
+    transition: clip-path 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}

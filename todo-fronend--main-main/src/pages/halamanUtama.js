@@ -9,7 +9,7 @@ const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
     useEffect(() => {
         const id = userData.userId
         dispatchFetchAllTodoAction(id)
-    }, [dispatchFetchAllTodoAction]);    
+    }, [dispatchFetchAllTodoAction, userData.userId]);    
 
     return(
         <React.Fragment>
@@ -29,7 +29,7 @@ const FormPage = ({ todoCategory, dispatchFetchAllTodoAction, userData}) => {
                     {
                             todoCategory.length > 0 ? <ShowList todoCategory={todoCategory}/> :
                             <div className="text-center mt-5">
-                                <h2 className="text-center"> kamu gak punya to Do Thing apa apa </h2>
+                                <h2 className="text-center"> You dont have any plans for now </h2>
                             </div>
                     }
                     </div>           

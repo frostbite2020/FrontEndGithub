@@ -18,7 +18,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   const [pageIndex, setPageIndex] = useState(1)
   const [totalPages, setTotalPages] = useState()
   //Check
-  
+  const [dataArray, setDataArray] = useState()
   useEffect(()=> {
     const idSub = match.params.todoCategoryID;
     if(idSub){
@@ -30,14 +30,12 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
       dispatchGetSubTodoIdAction(idSub, search, pageIndex, sortBy, filteredPriority,  data => {
         setPageIndex(data.todoItems.pageIndex)
         setTotalPages(data.todoItems.totalPages)
+        setDataArray(data)
       });      
     }
     
   }, [dispatchGetTodoIdAction, dispatchGetSubTodoIdAction, match.params.todoCategoryID, search, pageIndex, sortBy, filteredPriority ])
   
-  const cek =() =>{
-    console.log("ini angka" + title)
-  }
   //pagination
   const halaman = []
   for (let i = 1; i < (totalPages + 1); i++) {
@@ -49,7 +47,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
     history.replace(`/todo-category/${idCategory}/todos`)
   }
   //value of pages
-  const [pageNumberLimit, setPageNumberLimit] = useState(5)
+  const [pageNumberLimit] = useState(5)
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
 
@@ -63,7 +61,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   }
   const handlePrevPage = () => {
     setPageIndex(pageIndex - 1)
-    if((pageIndex - 1)% pageNumberLimit == 0){
+    if((pageIndex - 1)% pageNumberLimit === 0){
       setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
       setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit)
     }
@@ -80,15 +78,15 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   }
   const prevDecrementPage = () => {
     setPageIndex(pageIndex - 5)
-    if((pageIndex - 5)% pageNumberLimit == 1 
-        || (pageIndex - 5)% pageNumberLimit == 2
-        || (pageIndex - 5)% pageNumberLimit == 3
-        || (pageIndex - 5)% pageNumberLimit == 4
-        || (pageIndex - 5)% pageNumberLimit == 0){
+    if((pageIndex - 5)% pageNumberLimit === 1 
+        || (pageIndex - 5)% pageNumberLimit === 2
+        || (pageIndex - 5)% pageNumberLimit === 3
+        || (pageIndex - 5)% pageNumberLimit === 4
+        || (pageIndex - 5)% pageNumberLimit === 0){
       setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
       setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit)
     }
-    if(pageIndex == totalPages){
+    if(pageIndex === totalPages){
       let i = totalPages
       setPageIndex(i - 1)
     }
@@ -105,7 +103,7 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
   const renderPageNumbers = halaman.map((number) => {
     if(number < (maxPageNumberLimit + 1) && number > minPageNumberLimit){
       return(
-        <li className={pageIndex == number ? "active" : null}
+        <li className={pageIndex === number ? "active" : null}
             key={number} 
             id={number} 
             onClick={handleOnClick}>
@@ -123,10 +121,14 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
     <React.Fragment>
       <div className="container mt-5">
         <div className="row">
-          <div className="col-3">
-            <h2 style={{fontWeight:'bold'}}>{title}</h2>
-            <button onClick={cek}>cek</button>
-            <div className="search-input input-group">
+          <div className="col-12 col-md-3">
+            <div className="mx-1 row d-flex justify-content-between mb-2">
+              <h2 style={{fontWeight:'bold'}}>{title}</h2>
+              <Link to={`/todo-category/subTodo/${idCategory}/add`}> 
+                <button className="btn btn-primary mt-1">Add</button>
+              </Link>
+            </div>
+            <div className="search-input input-group mx-1">
               <input 
                   className="form-control"
                   type="text"
@@ -134,29 +136,36 @@ const Sublist = ( {dispatchGetTodoIdAction, dispatchGetSubTodoIdAction,
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}/>
                 <span className="input-group-btn">
-                  <button className="btn-primary">
+                  <button className="btn-secondary mr-2">
                     search
                   </button>
                 </span>
             </div>
-            <select value={sortBy} defaultValue="0" onChange={(e) => setSortBy(e.target.value)}>
-              <option value="0">-----</option>
-              <option value="1">By Name</option>
-              <option value="2">By Descent Name</option>
-              <option value="3">By Priority</option>
-            </select>
-            <select value={filteredPriority} defaultValue="0" onChange={(e) => setFilteredPriority(e.target.value)}>
-              <option value="0">-----</option>
-              <option value="4">High Priority</option>
-              <option value="3">Medium Priority</option>
-              <option value="2">Low Priority</option>
-              <option value="1">None</option>
-            </select>
-            <Link to={`/todo-category/subTodo/${idCategory}/add`}> 
-              <button className="btn btn-primary mt-1"> Add </button>
-            </Link>
+            <div className="sub-select-input mx-1">
+              <select 
+                value={sortBy} 
+                defaultValue="0" 
+                onChange={(e) => setSortBy(e.target.value)} 
+                className="form-control">
+                <option value="0">-----</option>
+                <option value="1">By Name</option>
+                <option value="2">By Descent Name</option>
+                <option value="3">By Priority</option>
+              </select>
+              <select 
+                value={filteredPriority} 
+                defaultValue="0" 
+                onChange={(e) => setFilteredPriority(e.target.value)}
+                className="form-control">
+                <option value="0">-----</option>
+                <option value="4">High Priority</option>
+                <option value="3">Medium Priority</option>
+                <option value="2">Low Priority</option>
+                <option value="1">None</option>
+              </select>
+            </div>
           </div>
-          <div className="col-9">
+          <div className="col-12 mt-4 col-md-9 mt-md-0">
               <table className="table border">
                 <thead>
                   <tr>

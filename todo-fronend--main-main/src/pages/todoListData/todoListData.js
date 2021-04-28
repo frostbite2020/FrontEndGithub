@@ -22,6 +22,7 @@ const TodoListDataPage = ({
         event.preventDefault()
         const done = !e
         const dataCheck = {id, done}
+        console.log(dataCheck)
         dispatchUpdateCheckBoxAction( id,  dataCheck, () =>{
           toast.success('Success updating status');
           dispatchGetSubTodoIdAction(idCategory, search, pageIndex, sortBy, filteredPriority);
@@ -53,11 +54,6 @@ const TodoListDataPage = ({
         );
       };
 
-      //cek
-    const cek =() =>{
-        console.log(idCategory)
-    }
-
     return (
         <tbody>
             {subTodoCategory.map((datas, index) => (
@@ -70,7 +66,6 @@ const TodoListDataPage = ({
                         type="checkbox"
                         checked={datas.done}
                         id="flexCheckDefault"
-                        aria-setsize={30}
                         size={30}
                         onChange={(e) => checkDone(e, datas.id, datas.done)}/>
                     </div>
@@ -92,7 +87,6 @@ const TodoListDataPage = ({
                 </td>
                 </tr>
             ))}
-            {/* <button onClick={cek}>cek</button> */}
             <Modal handleDelete={handleDelete} />
         </tbody>
     )
